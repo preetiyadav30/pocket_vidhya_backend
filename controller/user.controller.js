@@ -382,7 +382,7 @@ const admin_signup = async (req, res, next) => {
                     //     })
                     // }
                     // else {
-                    db.query('Insert into Admin(username,email,password) values(?,?,?)', [req.body.username, req.body.email, EncryptedPassword], (err, result, feilds) => {
+                    db.query('Insert into admin(username,email,password) values(?,?,?)', [req.body.username, req.body.email, EncryptedPassword], (err, result, feilds) => {
                         if (err) {
                             return res.status(400).send({
                                 success: false,
@@ -816,7 +816,7 @@ const admin_get_user=async(req,res,next)=>{
 
 const admin_getQuestion=async(req,res,next)=>{
     try{
-        await db.query("Select * from questionnaire where category=?",[req.query.category],(err,result)=>{
+        await db.query("Select * from questionnaire where category=?",[req.params.category],(err,result)=>{
             if(err){
                 res.status(400).send({
                     success:false,
