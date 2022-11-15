@@ -16,4 +16,6 @@ db.connect((err)=>{
     }
     
 })
+
+ // change the dbconnection .js file
 module.exports=db
