@@ -163,11 +163,9 @@ const adminLogin1 = async (req, res, next) => {
             }
           else {
            const  is_PasswordCorrect=bcrypt.compareSync(req.body.password,result[0].password)
-          
-            
             //  console.log(result)
                        if(is_PasswordCorrect==true){
-                          const token = jwt.sign({ data: [result[0].Admin_id,result[0].username] }, process.env.JWT_SECRET_KEY)
+                          const token = jwt.sign({ data: [result[0].Admin_id,result[0].username] }, process.env.POCKET_ADMIN_SECRET)
                            res.status(200).send({
                             success:true,
                             results:result,
