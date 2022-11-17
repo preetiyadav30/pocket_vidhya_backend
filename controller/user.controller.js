@@ -59,7 +59,7 @@ const signup = async (req, res, next) => {
                     }
                 if(bresult){
                
-                const token = jwt.sign({ data: result }, process.env.POKET_VIDHYASACRET)
+                const token = jwt.sign({ data: result }, process.env.JWT_SECRET_KEY)
                 if (result.length) {
                     res.send({
                         message: "User Already Exists",
@@ -87,7 +87,7 @@ const signup = async (req, res, next) => {
                                 }
 
                                 if (result) {
-                                    const token = jwt.sign({ data: result }, process.env.POKET_VIDHYASACRET)
+                                    const token = jwt.sign({ data: result }, process.env.JWT_SECRET_KEY)
 
                                     res.status(200).send({
                                         success: true,
