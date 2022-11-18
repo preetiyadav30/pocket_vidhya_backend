@@ -1,10 +1,16 @@
 const bodyParser = require('body-parser');
 const express=require('express');
+var https = require('https');
+var fs = require('fs');
 
 const cors=require('cors')
 // const path = require('path');
 const app=express();
 
+var options = {
+    key: fs.readFileSync('../ssl/privatekey.key'),
+    cert: fs.readFileSync('../ssl/certificate.pem')
+};
 
 let corOption ={
     origin:'*',
@@ -52,7 +58,20 @@ res.status(200).send({
 console.log(req.query.category)
 })
 
-app.listen(5000,()=>{
+// app.listen(5000,()=>{
     
-    console.log("Server up and Running on port 5000");
-})
+//     console.log("Server up and Running on port 5000");
+// })
+
+// simple route
+app.get("/", (req, res) => {
+  res.send(
+    `<h1 style='text-align: center'>
+          Wellcome to Myadmin Backend 
+          <br><br>
+          <b style="font-size: 182px;">😃👻</b>
+      </h1>`
+  );
+});
+
+https.createServer(options, app).listen(5000,() => console.log("App running in port 5000 !"));
