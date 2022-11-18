@@ -142,6 +142,7 @@ const avtar_category = async (req, res) => {
     }
 
 }
+//dfhjff
 // **************************************
 // const admin_addCategory=(req,res,next)=>{
 //     await db.query('insert into category ')

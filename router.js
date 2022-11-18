@@ -10,7 +10,8 @@ const validation=require('./validator')
 
 const controller1=require('./controller/answer.controller')
 const adminValidation=require('./admin_validation');const { JWT } = require('google-auth-library');
-const cors=require('cors')
+const cors=require('cors');
+const { createPool } = require('mysql');
 const storage= multer.diskStorage({
     destination:'Pocket_Vidhya/public/images',
     filename:(req,file,callback)=>{
@@ -69,9 +70,9 @@ router.post('/admin/add_language',adminValidation,controller.admin_add_language)
 
 router.get('/admin/getStatistics',adminValidation,controller.admin_Statistics)
 
-router.get('/admin/getQuestions:',controller.admin_getQuestion)
+router.get('/admin/getQuestions',controller.admin_getQuestion)
 
-router.get('/admin/getUsers?',adminValidation,controller.admin_get_user)
+router.get('/admin/getUsers',adminValidation,controller.admin_get_user)
 
 router.post('/user/answer',validation,controller1.answer_attempt)
 
@@ -80,4 +81,6 @@ router.post('user/logout',validation,controller.logout)
 router.post('/user/QA',QAcontroller.QA)
 
 //***************************************************************************/
+
+
 module.exports=router
