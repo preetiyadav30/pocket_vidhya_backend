@@ -452,10 +452,11 @@ const admin_update_question = async (req, res, next) => {
       // const decoded_Username = decode.data[0].Admin_id;
   
       await db.query(
-        `update questionnaire set Question=? , category=? , option1=? , option2=? , option3=? , option4=? , correct_option=? , Description=? , Language=? , Status=? , updated_at=${Date.now()} where question_id=?`,
+        `update questionnaire set Question=? , category=? , Level=?, option1=? , option2=? , option3=? , option4=? , correct_option=? , Description=? , Language=? , Status=? , q_order=? , updated_at=${Date.now()} where question_id=?`,
         [
           req.body.Question,
           req.body.category,
+          req.body.Level,
           req.body.option1,
           req.body.option2,
           req.body.option3,
@@ -464,6 +465,7 @@ const admin_update_question = async (req, res, next) => {
           req.body.Description,
           req.body.Language,
           req.body.Status,
+          req.body.q_order,
           req.params.question_id,
           // decoded_Username,
         ],
