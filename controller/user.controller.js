@@ -491,7 +491,7 @@ const admin_update_question = async (req, res, next) => {
         });
       }
     }
-  };
+  }
 
 const admin_add_category = async (req, res, next) => {
 
