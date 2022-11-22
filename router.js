@@ -62,7 +62,7 @@ router.post('/admin/add_category',adminValidation,controller.admin_add_category)
 
 router.post('/admin/delete_language',adminValidation,controller.admin_delete_language)
 
-router.post('/admin/add_question',adminValidation,controller.add_question)
+router.post('/admin/add_question',controller.add_question)
 
 router.post('/admin/Signup',controller.admin_signup)
 
