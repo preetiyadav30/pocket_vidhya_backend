@@ -230,7 +230,7 @@ const add_question = async (req, res, next) => {
                     })
                 }
                 else {
-                    db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Description,added_by) values(?,?,?,?,?,?,?,?,${decoded_Username})`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option, req.body.Description,decoded_Username], (berr, bresult, feilds) => {
+                    db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Description) values(?,?,?,?,?,?,?,?)`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option, req.body.Description], (berr, bresult, feilds) => {
                         if (berr) {
                             res.status(400).send({
                                 success: false,
@@ -241,7 +241,7 @@ const add_question = async (req, res, next) => {
                         if (bresult) {
                             res.status(200).send({
                                 success: true,
-                                msg: `Question Added by Admin:${decoded_Username}`,
+                                msg: `Question Added `,
                                 results: bresult
                             })
                         }
