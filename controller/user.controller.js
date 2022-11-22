@@ -230,7 +230,7 @@ const add_question = async (req, res, next) => {
                     })
                 }
                 else {
-                    db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Description,added_by) values(?,?,?,?,?,?,?,?,${decoded_Username})`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option, req.body.Description], (berr, bresult, feilds) => {
+                    db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Description,added_by) values(?,?,?,?,?,?,?,?,${decoded_Username})`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option, req.body.Description,decoded_Username], (berr, bresult, feilds) => {
                         if (berr) {
                             res.status(400).send({
                                 success: false,
@@ -906,7 +906,7 @@ const delete_user = async (req, res, next) => {
 
 const admin_getQuestion=async(req,res,next)=>{
     try{
-        await db.query("Select * from questionnaire where category=?",[req.params.category],(err,result)=>{
+        await db.query("Select * from questionnaire where category=? and Question_id",[req.params.category,req.params.Question_id],(err,result)=>{
             if(err){
                 res.status(400).send({
                     success:false,
@@ -928,6 +928,8 @@ const admin_getQuestion=async(req,res,next)=>{
         })
     }
 }
+
+
 
 
 module.exports = {
