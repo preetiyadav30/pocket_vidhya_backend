@@ -211,7 +211,7 @@ const add_question = async (req, res, next) => {
 
         const auth = req.headers.authorization.split(" ")[1]
         const decode = jwt.decode(auth)
-
+                console.log(decode);
         let decoded_Username = decode.data[0].Admin_id
         console.log(decoded_Username)
         await db.query('select * from questionnaire where question=? ', [req.body.Question], (err, result, feilds) => {
