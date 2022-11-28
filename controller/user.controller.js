@@ -411,89 +411,88 @@ const admin_signup = async (req, res, next) => {
     }
 }
 
-const admin_update_question = async (req, res, next) => {
-
-    try {
-        const auth = req.headers.authorization.split(" ")[1]
-        const decode = jwt.decode(auth)
-
-        const decoded_Username = decode.data[0].Admin_id
-
-        await db.query(`Update question set Question=?,category=?,option1=?,option2=?,option3=?,option4=?,correct_Option=?,Description=?,Language=?,Status=?,updated_at=${Date.now()} where question_id=?`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_Option, req.body.Description, req.body.Language, req.body.Status,req.params.question_id], (err, result, feilds) => {
-            if (err) {
-                res.status(401).send({
-                    success: false,
-                    err: err.message
-                })
-            }
-            if (result) {
-                res.status(200).send({
-                    success: true,
-                    results: result
-                })
-            }
-        })
-    }
-    catch (err) {
-        if (err) {
-            res.status(400).send({
-                success: false,
-                err: err.message
-            })
-        }
-    }
-}
-
 // const admin_update_question = async (req, res, next) => {
+
 //     try {
-//       // const auth = req.headers.authorization.split(" ")[1];
-//       // const decode = jwt.decode(auth);
-  
-//       // const decoded_Username = decode.data[0].Admin_id;
-  
-//       await db.query(
-//         `update questionnaire set Question=? , category=? , Level=?, option1=? , option2=? , option3=? , option4=? , correct_option=? , Description=? , Language=? , Status=? , q_order=? , updated_at=${Date.now()} where question_id=?`,
-//         [
-//           req.body.Question,
-//           req.body.category,
-//           req.body.Level,
-//           req.body.option1,
-//           req.body.option2,
-//           req.body.option3,
-//           req.body.option4,
-//           req.body.correct_Option,
-//           req.body.Description,
-//           req.body.Language,
-//           req.body.Status,
-//           req.body.q_order,
-//           req.params.question_id,
-//           // decoded_Username,
-//         ],
-//         (err, result, feilds) => {
-//           if (err) {
-//             res.status(400).send({
-//               success: false,
-//               err: err,
-//             });
-//           }
-//           if (result) {
-//             res.status(200).send({
-//               success: true,
-//               results: result,
-//               msg:"change"
-//             });
-//           }
-//         }
-//       );
-//     } catch (err) {
-//       if (err) {
-//         res.status(400).send({
-//           success: false,
-//           err: err.message,
-//         });
-//       }
+//         const auth = req.headers.authorization.split(" ")[1]
+//         const decode = jwt.decode(auth)
+
+//         const decoded_Username = decode.data[0].Admin_id
+
+//         await db.query(`Update question set Question=?,category=?,option1=?,option2=?,option3=?,option4=?,correct_Option=?,Description=?,Language=?,Status=?,updated_at=${Date.now()} where question_id=?`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_Option, req.body.Description, req.body.Language, req.body.Status,req.params.question_id], (err, result, feilds) => {
+//             if (err) {
+//                 res.status(401).send({
+//                     success: false,
+//                     err: err.message
+//                 })
+//             }
+//             if (result) {
+//                 res.status(200).send({
+//                     success: true,
+//                     results: result
+//                 })
+//             }
+//         })
 //     }
-//   }
+//     catch (err) {
+//         if (err) {
+//             res.status(400).send({
+//                 success: false,
+//                 err: err.message
+//             })
+//         }
+//     }
+// }
+
+const admin_update_question = async (req, res, next) => {
+    try {
+      const auth = req.headers.authorization.split(" ")[1];
+      const decode = jwt.decode(auth);
+  
+      const decoded_Username = decode.data[0].Admin_id;
+  
+      await db.query(
+        `update questionnaire set Question=? , category=? , Level=?, option1=? , option2=? , option3=? , option4=? , correct_Option=? , Description=? , Language=? , Status=? , updated_at=${Date.now()},added_by=? where question_id=?`,
+        [
+          req.body.Question,
+          req.body.category,
+          req.body.Level,
+          req.body.option1,
+          req.body.option2,
+          req.body.option3,
+          req.body.option4,
+          req.body.correct_Option,
+          req.body.Description,
+          req.body.Language,
+          req.body.Status,
+          req.params.question_id,
+          decoded_Username
+        ],
+        (err, result, feilds) => {
+          if (err) {
+            res.status(400).send({
+              success: false,
+              err: err.message,
+            });
+          }
+          if (result) {
+            res.status(200).send({
+              success: true,
+              results: result,
+              msg:"change"
+            });
+          }
+        }
+      );
+    } catch (err) {
+      if (err) {
+        res.status(400).send({
+          success: false,
+          err: err.message,
+        });
+      }
+    }
+  }
 
 const admin_add_category = async (req, res, next) => {
 

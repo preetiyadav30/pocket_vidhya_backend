@@ -54,9 +54,9 @@ router.get('/admin/total_category',adminValidation,controller.total_category)
 
 router.patch('/admin/update_question_status',adminValidation,controller.admin_update_questionStatus)
 
-router.patch('/admin_update_question/:question_id',adminValidation,controller.admin_update_question);
+// router.patch('/admin_update_question/:question_id',adminValidation,controller.admin_update_question);
 
-// router.put('/admin_update_question/:question_id',controller.admin_update_question);
+router.put('/admin_update_question/:question_id',adminValidation,controller.admin_update_question);
 
 router.post('/admin/add_category',adminValidation,controller.admin_add_category)
 
