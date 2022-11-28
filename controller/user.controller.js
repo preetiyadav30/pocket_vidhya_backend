@@ -444,6 +444,47 @@ const admin_update_question = async (req, res, next) => {
     }
 }
 
+const delete_question = async (req, res, next) => {
+    try {
+      await db.query(
+        "select * from questionnaire where Question_id=?",
+        [req.params.Question_id],
+        (err, result, feilds) => {
+          if (err) {
+            res.status(400).send({
+              success: false,
+              err: err,
+            });
+          } else {
+            db.query(
+              "delete from questionnaire where Question_id= ?",
+              [req.params.Question_id],
+              (berr, bresult, feilds) => {
+                if (berr) {
+                  res.status(400).send({
+                    success: false,
+                    err: berr,
+                  });
+                } else {
+                  res.status(200).send({
+                    success: true,
+                    msg: "Question Delete successfully...",
+                    results: bresult,
+                  });
+                }
+              }
+            );
+          }
+        }
+      );
+    } catch (err) {
+      res.status(400).send({
+        seccess: false,
+        err: err,
+      });
+    }
+  };
+
 // const admin_update_question = async (req, res, next) => {
 //     try {
 //       const auth = req.headers.authorization.split(" ")[1];
@@ -928,10 +969,71 @@ const admin_getQuestion=async(req,res,next)=>{
     }
 }
 
+const admin_getQuestion_by_language_and_category=async(req,res,next)=>{
+    try{
+        await db.query("Select * from questionnaire where Language=? and category=?",[req.params.Language,req.params.category],(err,result)=>{
+            if(err){
+                res.status(400).send({
+                    success:false,
+                    err:err
+                })
+            }
+            console.log(result)
+            if(result){
+                res.status(200).send({
+                    success:true,
+                    results:result
+                   
+                })
+            }else{
+                res.status(404).send({
+                    success:false,
+                    
+                })
+            }
+        })
+    }
+    catch(Exeption){
+        res.status(400).send({
+            success:false,
+            err:Exeption
+        })
+    }
+}
 
-
-
+const admin_getQuestion_by_Id=async(req,res,next)=>{
+    try{
+        await db.query("Select * from questionnaire where Question_id=?",[req.params.Question_id],(err,result)=>{
+            if(err){
+                res.status(400).send({
+                    success:false,
+                    err:err
+                })
+            }
+            console.log(result)
+            if(result){
+                res.status(200).send({
+                    success:true,
+                    results:result
+                   
+                })
+            }else{
+                res.status(404).send({
+                    success:false,
+                    
+                })
+            }
+        })
+    }
+    catch(Exeption){
+        res.status(400).send({
+            success:false,
+            err:Exeption
+        })
+    }
+}
 module.exports = {
     signup, avtar_category, add_question, question, add_avtar, admin_signup, get_question_user, admin_update_question, admin_add_category, admin_add_language, admin_delete_language, total_user, total_language, total_category, admin_update_questionStatus, adminLogin1, answer1, quiz_category, admin_Statistics,logout,admin_get_user,delete_user,admin_getQuestion
+    ,delete_question,admin_getQuestion_by_language_and_category,admin_getQuestion_by_Id
 }
 // increase_attemptscfgydebn
