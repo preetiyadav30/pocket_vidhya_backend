@@ -218,7 +218,7 @@ const add_question = async (req, res, next) => {
             if (err) {
                 res.status(400).send({
                     success: false,
-                    err: err,
+                    err: err.message,
                     block: 1
                 })
             }
@@ -234,7 +234,7 @@ const add_question = async (req, res, next) => {
                         if (berr) {
                             res.status(400).send({
                                 success: false,
-                                err: berr,
+                                err: berr.message,
                                 block: 2
                             })
                         }
@@ -257,7 +257,7 @@ const add_question = async (req, res, next) => {
     catch (err) {
         res.status(400).send({
             seccess: false,
-            err: err
+            err: err.message
         })
     }
 }
