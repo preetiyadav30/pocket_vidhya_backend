@@ -419,7 +419,7 @@ const admin_update_question = async (req, res, next) => {
 
         const decoded_Username = decode.data[0].Admin_id
 
-        await db.query(`Update question set Question=?,category=?,Option1=?,option2=?,optionn3=?,option4=?,correct_option=?,Description=?,Language=?,Status=?,updated_at=${Date.now()} where question_id=?`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_Option, req.body.Description, req.body.Language, req.body.Status,req.params.question_id], (err, result, feilds) => {
+        await db.query(`Update question set Question=?,category=?,Option1=?,option2=?,option3=?,option4=?,correct_option=?,Description=?,Language=?,Status=?,updated_at=${Date.now()} where question_id=?`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_Option, req.body.Description, req.body.Language, req.body.Status,req.params.question_id], (err, result, feilds) => {
             if (err) {
                 res.status(401).send({
                     success: false,
