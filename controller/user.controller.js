@@ -230,7 +230,7 @@ const add_question = async (req, res, next) => {
                     })
                 }
                 else {
-                    db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Description,Language,created_at=${Date.now()},added_by) values(?,?,?,?,?,?,?,?,?,?)`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option, req.body.Description,req.body.Language,decoded_Username], (berr, bresult, feilds) => {
+                    db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Description,Language,created_at=${Date.now()}) values(?,?,?,?,?,?,?,?,?)`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option, req.body.Description,req.body.Language], (berr, bresult, feilds) => {
                         if (berr) {
                             res.status(400).send({
                                 success: false,
