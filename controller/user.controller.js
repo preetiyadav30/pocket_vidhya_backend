@@ -946,7 +946,7 @@ const delete_user = async (req, res, next) => {
 
 const admin_getQuestion=async(req,res,next)=>{
     try{
-        await db.query("Select * from questionnaire where category=? and Question_id",[req.params.category,req.params.Question_id],(err,result)=>{
+        await db.query("Select * from questionnaire where category=?",[req.params.category],(err,result)=>{
             if(err){
                 res.status(400).send({
                     success:false,
