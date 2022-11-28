@@ -74,7 +74,7 @@ router.get('/admin/getStatistics',adminValidation,controller.admin_Statistics)
 
 router.get('/admin/getQuestions/:category',controller.admin_getQuestion)
 
-//router.get('/admin/getQuestions/:category/:Question_id',controller.admin_getQuestion_by_Id)
+router.get('/admin/getQuestions/:category/:Question_id',controller.admin_getQuestion_by_Id)
 
 router.get('/admin/getUsers',adminValidation,controller.admin_get_user)
 
@@ -83,8 +83,6 @@ router.delete("/user/delete_user/:user_id",controller.delete_user)
 router.delete("/admin/delete_question/:Question_id",adminValidation,controller.delete_question);
 
 router.get('/admin/getQuestion/:Language/:category',controller.admin_getQuestion_by_language_and_category)
-
-router.get('/admin/getQuestion/:Language/:category/:Question_id',controller.admin_getQuestion_by_Id)
 
 router.post('/user/answer',validation,controller1.answer_attempt)
 
