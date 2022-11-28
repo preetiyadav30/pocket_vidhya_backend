@@ -165,7 +165,7 @@ const adminLogin1 = async (req, res, next) => {
            const  is_PasswordCorrect=bcrypt.compareSync(req.body.password,result[0].password)
             //  console.log(result)
                        if(is_PasswordCorrect==true){
-                          const token = jwt.sign({ data: [result[0].Admin_id,result[0].username] }, process.env.POCKET_ADMIN_SECRET)
+                          const token = jwt.sign({ data: result }, process.env.POCKET_ADMIN_SECRET)
                            res.status(200).send({
                             success:true,
                             results:result,
@@ -206,12 +206,68 @@ const adminLogin1 = async (req, res, next) => {
     })
 }
 
+// const add_question = async (req, res, next) => {
+//     try {
+
+//         const auth = req.headers.authorization.split(" ")[1]
+//         const decode = jwt.decode(auth)
+//                 console.log(decode);
+//         let decoded_Username = decode.data[0].Admin_id
+//         console.log(decoded_Username)
+//         await db.query('select * from questionnaire where question=? ', [req.body.Question], (err, result, feilds) => {
+//             if (err) {
+//                 res.status(400).send({
+//                     success: false,
+//                     err: err.message,
+//                     block: 1
+//                 })
+//             }
+//             if (result) {
+//                 if (result.length > 0) {
+//                     res.status(200).send({
+//                         success: true,
+//                         msg: "Question Already Exists "
+//                     })
+//                 }
+//                 else {
+//                     db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Description,Language,created_at,added_by) values(?,?,?,?,?,?,?,?,?,?,?)`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option, req.body.Description,req.body.Language,Date.now(),decoded_Username], (berr, bresult, feilds) => {
+//                         if (berr) {
+//                             res.status(400).send({
+//                                 success: false,
+//                                 err: berr.message,
+//                                 block: 2
+//                             })
+//                         }
+//                         if (bresult) {
+//                             res.status(200).send({
+//                                 success: true,
+//                                 msg: `Question Added `,
+//                                 results: bresult
+//                             })
+//                         }
+
+//                     })
+//                 }
+//             }
+
+//         })
+
+
+//     }
+//     catch (err) {
+//         res.status(400).send({
+//             seccess: false,
+//             err: err.message
+//         })
+//     }
+// }
+
 const add_question = async (req, res, next) => {
     try {
 
         const auth = req.headers.authorization.split(" ")[1]
         const decode = jwt.decode(auth)
-                console.log(decode);
+
         let decoded_Username = decode.data[0].Admin_id
         console.log(decoded_Username)
         await db.query('select * from questionnaire where question=? ', [req.body.Question], (err, result, feilds) => {
@@ -230,18 +286,18 @@ const add_question = async (req, res, next) => {
                     })
                 }
                 else {
-                    db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Description,Language,created_at,added_by) values(?,?,?,?,?,?,?,?,?,?,?)`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option, req.body.Description,req.body.Language,Date.now(),decoded_Username], (berr, bresult, feilds) => {
+                    db.query(`insert into questionnaire(Question,category,option1,option2,option3,option4,correct_option,Language,Status,Description,added_by) values(?,?,?,?,?,?,?,?,?,?,?)`, [req.body.Question, req.body.category, req.body.option1, req.body.option2, req.body.option3, req.body.option4, req.body.correct_option,req.body.Language,req.body.Status,req.body.Description, decoded_Username], (berr, bresult, feilds) => {
                         if (berr) {
                             res.status(400).send({
                                 success: false,
-                                err: berr.message,
+                                err: berr,
                                 block: 2
                             })
                         }
                         if (bresult) {
                             res.status(200).send({
                                 success: true,
-                                msg: `Question Added `,
+                                msg: `Question Added by Admin:${decoded_Username}`,
                                 results: bresult
                             })
                         }
