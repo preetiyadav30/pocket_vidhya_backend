@@ -74,7 +74,7 @@ router.get('/admin/getStatistics',adminValidation,controller.admin_Statistics)
 
 router.get('/admin/getQuestions/:category',controller.admin_getQuestion)
 
-router.get('/admin/getQuestions/:category/:Question_id',controller.admin_getQuestion_by_Id)
+router.get('/admin/getQuestions_by_id/:Question_id',controller.admin_getQuestion_by_Id)
 
 router.get('/admin/getUsers',adminValidation,controller.admin_get_user)
 
