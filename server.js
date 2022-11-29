@@ -9,8 +9,8 @@ const cors=require('cors')
 const app=express();
 
 var options = {
-    key: fs.readFileSync('./ssl/privatekey.key'),
-    cert: fs.readFileSync('./ssl/certificate.pem'),
+    key: fs.readFileSync('../ssl/privatekey.key'),
+    cert: fs.readFileSync('../ssl/certificate.pem'),
    
 };
 
