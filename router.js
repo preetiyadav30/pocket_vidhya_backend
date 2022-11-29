@@ -56,7 +56,7 @@ router.patch('/admin/update_question_status',adminValidation,controller.admin_up
 
 // router.patch('/admin_update_question/:question_id',adminValidation,controller.admin_update_question);
 
-router.put('/admin_update_question/:Question_id',adminValidation,controller.admin_update_question);
+router.put('/admin_update_question/:Question_id',controller.admin_update_question);
 
 router.post('/admin/add_category',adminValidation,controller.admin_add_category)
 
