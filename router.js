@@ -80,7 +80,7 @@ router.get('/admin/getUsers',adminValidation,controller.admin_get_user)
 
 router.delete("/user/delete_user/:user_id",controller.delete_user)
 
-router.delete("/admin/delete_question/:Question_id",adminValidation,controller.delete_question);
+router.delete("/admin/delete_question/:Question_id",controller.delete_question);
 
 router.get('/admin/getQuestion/:Language/:category',controller.admin_getQuestion_by_language_and_category)
 
