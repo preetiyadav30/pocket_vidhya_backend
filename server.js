@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const express=require('express');
+// const k = require('./ssl/')
 var https = require('https');
 var fs = require('fs');
 
@@ -8,8 +9,9 @@ const cors=require('cors')
 const app=express();
 
 var options = {
-    key: fs.readFileSync('../ssl/privatekey.key'),
-    cert: fs.readFileSync('../ssl/certificate.pem')
+    key: fs.readFileSync('./ssl/privatekey.key'),
+    cert: fs.readFileSync('./ssl/certificate.pem'),
+   
 };
 
 let corOption ={
