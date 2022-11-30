@@ -38,7 +38,7 @@ router.post('user/logout',validation,controller.user_logout)
 
 router.patch("/user/update_language_and_category",validation,controller.user_update_language_and_category)
 
-router.post("/user/get_question_by_language_and_category",validation,controller.user_getQuestion_by_language_and_category)
+router.post("/user/getQuestion/:Language/:category",validation,controller.user_getQuestion_by_language_and_category)
 
 //router.get('/getAvtar',upload.single('image'),controller.avtar_category)
 
