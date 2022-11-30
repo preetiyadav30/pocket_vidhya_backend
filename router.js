@@ -38,11 +38,11 @@ router.post('user/logout',validation,controller.user_logout)
 
 router.patch("/user/update_language_and_category",validation,controller.user_update_language_and_category)
 
-router.post("/user/get_question_by_language_and_category",validation,controller.user_get_question_by_language_and_category)
+// router.post("/user/get_question_by_language_and_category",validation,controller.user_get_question_by_language_and_category)
 
 //router.get('/getAvtar',upload.single('image'),controller.avtar_category)
 
-//router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)
+router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)
 
 router.post('/answer',validation,controller.answer1);
 
