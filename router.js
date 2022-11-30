@@ -22,8 +22,6 @@ const upload=multer({
     storage:storage
 });
 
-
-
 router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "*");
@@ -36,11 +34,13 @@ router.post("/user/singup",controller.user_signup)
 
 router.post("/user/login",controller.user_login)
 
+router.post('user/logout',validation,controller.user_logout)
+
 router.patch("/user/update_language_and_category",validation,controller.user_update_language_and_category)
 
 router.get('/getAvtar',upload.single('image'),controller.avtar_category)
 
-router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)
+//router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)
 
 router.post('/answer',validation,controller.answer1);
 
@@ -92,8 +92,6 @@ router.delete("/admin/delete_question/:Question_id",controller.delete_question);
 router.get('/admin/getQuestion/:Language/:category',controller.admin_getQuestion_by_language_and_category)
 
 router.post('/user/answer',validation,controller1.answer_attempt)
-
-router.post('user/logout',validation,controller.logout)
 
 router.post('/user/QA',QAcontroller.QA)
 
