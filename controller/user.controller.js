@@ -103,36 +103,37 @@ const user_update_language_and_category = async (req, res, next) => {
     })
 }
 
-// const user_get_question_by_language_and_category = async(req,res,next)=>{
-//     try {
-//         await db.query(`select * from questionnaire where Language=? and category=?`,[req.body.Language,req.body.category],(err,result,fields)=>{
-//             if(err){
-//                 res.status(401).send({
-//                     success:false,
-//                     err:err.message
-//                 })
-//             }
-//             if(!result.length){
-//                 res.status(404).send({
-//                     success:false,
-//                     msg:"Data not found"
-//                 })
-//             }else{
-//                 res.status(200).send({
-//                     success:true,
-//                     msg:`All Questions of category ${req.body.category}`,
-//                     results:result
-//                 })
-//             }
-//         })
-        
-//     } catch (error) {
-//         res.status(500).send({
-//             success:false,
-//             error:error
-//         })
-//     }
-// }
+const user_getQuestion_by_language_and_category=async(req,res,next)=>{
+    try{
+        await db.query("Select * from questionnaire where Language=? and category=?",[req.params.Language,req.params.category],(err,result)=>{
+            if(err){
+                res.status(400).send({
+                    success:false,
+                    err:err
+                })
+            }
+            console.log(result)
+            if(result){
+                res.status(200).send({
+                    success:true,
+                    results:result
+                   
+                })
+            }else{
+                res.status(404).send({
+                    success:false,
+                    
+                })
+            }
+        })
+    }
+    catch(Exeption){
+        res.status(400).send({
+            success:false,
+            err:Exeption
+        })
+    }
+}
 
 const user_logout=async(req,res,next)=>{
     try{
@@ -1251,6 +1252,6 @@ module.exports = {
     admin_add_language, admin_delete_language, total_user, total_language, total_category, admin_update_questionStatus,
     adminLogin1, answer1, quiz_category, admin_Statistics,admin_get_user,delete_user,admin_getQuestion,
     delete_question,admin_getQuestion_by_language_and_category,admin_getQuestion_by_Id,get_all_categories,
-   
+    user_getQuestion_by_language_and_category
 }
 
