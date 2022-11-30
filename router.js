@@ -31,7 +31,12 @@ router.use(function(req, res, next) {
     next();});
 
 /**************USER ******************/
-router.post('/signup11',controller.signup)
+
+router.post("/user/singup",controller.user_signup)
+
+router.post("/user/login",controller.user_login)
+
+router.patch("/user/update_language_and_category",validation,controller.user_update_language_and_category)
 
 router.get('/getAvtar',upload.single('image'),controller.avtar_category)
 
@@ -60,7 +65,7 @@ router.put('/admin_update_question/:Question_id',adminValidation,controller.admi
 
 router.post('/admin/add_category',adminValidation,controller.admin_add_category)
 
-router.get('/admin/get_all_categories',controller.get_all_categories)
+router.get('/admin/get_all_categories',adminValidation,controller.get_all_categories)
 
 router.post('/admin/delete_language',adminValidation,controller.admin_delete_language)
 

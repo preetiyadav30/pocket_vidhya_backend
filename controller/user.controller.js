@@ -8,7 +8,103 @@ const cors = require('cors')
 const { request } = require('express');
 
 
-const logout=async(req,res,next)=>{
+
+const user_signup = async (req,res,next)=>{
+    try {
+        await db.query(`select * from users where username=? and mobile_no=?`,[req.body.username,req.body.mobile_no],(err,result,fields)=>{
+            if(err){
+                res.status(401).send({
+                    success:false,
+                    err:err.message
+                });
+            }
+            if(!result.length){
+                db.query(`insert into users (username,mobile_no) values (?,?)`,[req.body.username,req.body.mobile_no],(err,result,fields)=>{
+                    if(err){
+                        res.status(400).send({
+                            success:false,
+                            msg:"user with this username or mobile number already exits please enter unique username and mobile number",
+                            err:err.message
+                        })
+                    }
+                    else{
+                        res.status(200).send({
+                            success:true,
+                            results:result,
+                            msg:"Signup Successfully"
+                        })
+                    }
+                })
+            }else{
+                res.status(200).send({
+                    success:true,
+                    msg:"User already exits please login to continue"
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send({
+            success:false,
+            error:error.message
+        })
+    }
+}
+
+const user_login = async (req, res, next) => {
+    await db.query(`select * from users where mobile_no=?`, [req.body.mobile_no], (err, result, feilds) => {
+
+        if (err) {
+            res.status(400).send({
+                success: false,
+                err: err.message
+            })
+        }
+        if (result) {
+            const token = jwt.sign({ data: result }, process.env.JWT_SECRET_KEY,{expiresIn:"12h"})
+            if (result.length) {
+                res.send({
+                    message: "Login Successfully",
+                    success: true,
+                    results: result,
+                    token: token
+                })
+            } else {
+                res.status(400).send({
+                    success: false,
+                    message: "Please signup to continue"
+                })
+            }
+        }
+    })
+}
+
+const user_update_language_and_category = async (req, res, next) => {
+  
+        const auth = req.headers.authorization.split(" ")[1]
+        const decode = jwt.decode(auth)
+
+        let decoded_Mobile_no = decode.data[0].mobile_no
+
+    db.query(`update users set Language=?,category=? where mobile_no=${decoded_Mobile_no}`, [req.body.Language, req.body.category], (err, result) => {
+        if (err) {
+            res.status(400).send({
+                success: false,
+                err: err.message
+            })
+        }
+        else {
+
+            res.status(200).send({
+                success: true,
+                message: `updated successfully`,
+                results: result
+            })
+        }
+
+    })
+}
+
+const user_logout=async(req,res,next)=>{
     try{
         const token=req.headers.authorizattion.split(" ")[1]
         const decode=jwt.decode(token)
@@ -38,84 +134,84 @@ const logout=async(req,res,next)=>{
     }
 }
 
-const signup = async (req, res, next) => {
-    // try {
+// const signup = async (req, res, next) => {
+//     // try {
 
-        await db.query('select * from user where mobile_no=? and username=?', [req.body.mobile_no, req.body.username], (err1, result, feilds) => {
+//         await db.query('select * from user where mobile_no=? and username=?', [req.body.mobile_no, req.body.username], (err1, result, feilds) => {
 
-            if (err1) {
-                res.status(400).send({
-                    success: false,
-                    err:err1
-                })
-            }
-            if (result) {
-                 db.query(`update user set avtar='${req.body.avtar}' ,language=? where username=? and mobile_no=?`,[req.body.language,req.body.username,req.body.mobile_no],(berr,bresult)=>{
-                    if(berr){
-                        res.status(400).send({
-                            success:false,
-                            ere:berr
-                        })
-                    }
-                if(bresult){
+//             if (err1) {
+//                 res.status(400).send({
+//                     success: false,
+//                     err:err1
+//                 })
+//             }
+//             if (result) {
+//                  db.query(`update user set avtar='${req.body.avtar}' ,language=? where username=? and mobile_no=?`,[req.body.language,req.body.username,req.body.mobile_no],(berr,bresult)=>{
+//                     if(berr){
+//                         res.status(400).send({
+//                             success:false,
+//                             ere:berr
+//                         })
+//                     }
+//                 if(bresult){
                
-                const token = jwt.sign({ data: result }, process.env.JWT_SECRET_KEY)
-                if (result.length) {
-                    res.send({
-                        message: "User Already Exists",
-                        success: true,
-                        results:result,
-                        token: token
-                    })
-                }
-                if (!result.length) {
+//                 const token = jwt.sign({ data: result }, process.env.JWT_SECRET_KEY)
+//                 if (result.length) {
+//                     res.send({
+//                         message: "User Already Exists",
+//                         success: true,
+//                         results:result,
+//                         token: token
+//                     })
+//                 }
+//                 if (!result.length) {
 
-                    db.query('Insert into user(username,mobile_no,Language,Avtar) values(?,?,?,?)', [req.body.username, req.body.mobile_no, req.body.Language, req.body.Avtar], (berr, bresult, feilds) => {
-                        if (berr) {
-                            res.status(400).send({
-                                success: false,
-                                err: berr
-                            })
-                        }
-                        else if (bresult) {
-                            db.query(`select * from user where username="${req.body.username}"`, (err, result, feilds) => {
-                                if (err) {
-                                    res.status(400).send({
-                                        success: false,
-                                        err: err
-                                    })
-                                }
+//                     db.query('Insert into user(username,mobile_no,Language,Avtar) values(?,?,?,?)', [req.body.username, req.body.mobile_no, req.body.Language, req.body.Avtar], (berr, bresult, feilds) => {
+//                         if (berr) {
+//                             res.status(400).send({
+//                                 success: false,
+//                                 err: berr
+//                             })
+//                         }
+//                         else if (bresult) {
+//                             db.query(`select * from user where username="${req.body.username}"`, (err, result, feilds) => {
+//                                 if (err) {
+//                                     res.status(400).send({
+//                                         success: false,
+//                                         err: err
+//                                     })
+//                                 }
 
-                                if (result) {
-                                    const token = jwt.sign({ data: result }, process.env.JWT_SECRET_KEY)
+//                                 if (result) {
+//                                     const token = jwt.sign({ data: result }, process.env.JWT_SECRET_KEY)
 
-                                    res.status(200).send({
-                                        success: true,
-                                        message: "New User Created",
-                                        // results: bresult,
-                                        token: token
+//                                     res.status(200).send({
+//                                         success: true,
+//                                         message: "New User Created",
+//                                         // results: bresult,
+//                                         token: token
 
-                                    })
-                                }
-                            })
-                        }
-                    })
+//                                     })
+//                                 }
+//                             })
+//                         }
+//                     })
 
-                }        
-            }
-        }) 
-            }
-        })
+//                 }        
+//             }
+//         }) 
+//             }
+//         })
 
-    // }
-    // catch (err) {
-    //     res.status(400).send({
-    //         seccess: false,
-    //         err: err.message
+//     // }
+//     // catch (err) {
+//     //     res.status(400).send({
+//     //         seccess: false,
+//     //         err: err.message
             
-    //     })
-    // }
-}
+//     //     })
+//     // }
+// }
 
 const avtar_category = async (req, res) => {
     try {
@@ -1119,7 +1215,7 @@ const admin_getQuestion_by_Id=async(req,res,next)=>{
     }
 }
 module.exports = {
-    signup, avtar_category, add_question, question, add_avtar, admin_signup, get_question_user, admin_update_question, admin_add_category, admin_add_language, admin_delete_language, total_user, total_language, total_category, admin_update_questionStatus, adminLogin1, answer1, quiz_category, admin_Statistics,logout,admin_get_user,delete_user,admin_getQuestion
+    user_signup,user_login,user_update_language_and_category, avtar_category, add_question, question, add_avtar, admin_signup, get_question_user, admin_update_question, admin_add_category, admin_add_language, admin_delete_language, total_user, total_language, total_category, admin_update_questionStatus, adminLogin1, answer1, quiz_category, admin_Statistics,logout,admin_get_user,delete_user,admin_getQuestion
     ,delete_question,admin_getQuestion_by_language_and_category,admin_getQuestion_by_Id,get_all_categories
 }
 // increase_attemptscfgydebn
