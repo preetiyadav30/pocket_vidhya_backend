@@ -10,7 +10,7 @@ const { request } = require('express');
 
 const user_signup = async (req,res,next)=>{
     try {
-        await db.query(`select * from users where username=? and mobile_no=?`,[req.body.username,req.body.mobile_no],(err,result,fields)=>{
+        await db.query(`select * from user where username=? and Mobile_no=?`,[req.body.username,req.body.mobile_no],(err,result,fields)=>{
             if(err){
                 res.status(401).send({
                     success:false,
@@ -18,7 +18,7 @@ const user_signup = async (req,res,next)=>{
                 });
             }
             if(!result.length){
-                db.query(`insert into users (username,mobile_no) values (?,?)`,[req.body.username,req.body.mobile_no],(err,result,fields)=>{
+                db.query(`insert into user (username,Mobile_no) values (?,?)`,[req.body.username,req.body.mobile_no],(err,result,fields)=>{
                     if(err){
                         res.status(400).send({
                             success:false,
@@ -50,7 +50,7 @@ const user_signup = async (req,res,next)=>{
 }
 
 const user_login = async (req, res, next) => {
-    await db.query(`select * from users where mobile_no=?`, [req.body.mobile_no], (err, result, feilds) => {
+    await db.query(`select * from user where Mobile_no=?`, [req.body.mobile_no], (err, result, feilds) => {
 
         if (err) {
             res.status(400).send({
@@ -84,7 +84,7 @@ const user_update_language_and_category = async (req, res, next) => {
 
         let decoded_Mobile_no = decode.data[0].mobile_no
 
-    db.query(`update users set Language=?,category=? where mobile_no=${decoded_Mobile_no}`, [req.body.Language, req.body.category], (err, result) => {
+    db.query(`update user set Language=?,category=? where mobile_no=${decoded_Mobile_no}`, [req.body.Language, req.body.category], (err, result) => {
         if (err) {
             res.status(400).send({
                 success: false,
