@@ -14,31 +14,28 @@ var options = {
    
 };
 
-let corOption ={
-    origin:'*',
-    methods:["GET","POST","PUT","DELETE"],
-  }
+// let corOption ={
+//     origin:'*',
+//     methods:["GET","POST","PUT","DELETE"],
+//   }
 
   app.use(cors(corOption));
 
 const db=require('./dbConnections')
 const indexrouter=require('./router')
 
-
-
-
 app.use(express.json());
 app.use(bodyParser.urlencoded({
     extended:true
 }))
 
-// let corOption ={
-//     origin:['http://localhost:3000','http://localhost:5000'],
-//     methods:["GET","POST","PUT","DELETE"],
-//   }
-//   app.use(cors(corOption));
+let corOption ={
+    origin:['http://localhost:3000','http://localhost:5000'],
+    methods:["GET","POST","PUT","DELETE"],
+  }
+  app.use(cors(corOption));
 
-//   app.options('*', cors());
+  app.options('*', cors());
 
   app.use(bodyParser.json());
 
