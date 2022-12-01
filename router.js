@@ -42,7 +42,7 @@ router.get("/user/getQuestion/:Language/:category",validation,controller.user_ge
 
 //router.get('/getAvtar',upload.single('image'),controller.avtar_category)
 
-router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)
+//router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)
 
 router.post('/answer',validation,controller.answer1);
 
