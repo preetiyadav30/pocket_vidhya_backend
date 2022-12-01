@@ -65,8 +65,8 @@ const user_login = async (req, res, next) => {
                     
                     message: "Login Successfully",
                     success: true,
-                    token:token,
                     results: result,
+                    token1:token
                     
                 })
             } else {
