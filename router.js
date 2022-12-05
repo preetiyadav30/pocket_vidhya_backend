@@ -30,7 +30,7 @@ router.use(function(req, res, next) {
 
 /**************USER ******************/
 
-router.post("/user/singup",controller.user_signup)
+router.post("/user/signup",controller.user_signup)
 
 router.post('/user/mobile_verification',controller.check_Mo_no)
 
