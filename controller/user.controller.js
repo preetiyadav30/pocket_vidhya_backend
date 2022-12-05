@@ -49,6 +49,34 @@ const user_signup = async (req,res,next)=>{
     }
 }
 
+
+const check_Mo_no = async (req, res, next) => {
+
+    await db.query(`select * from user where Mobile_no=?`, [req.body.mobile_no], (error, result, feilds) => {
+        if (error) {
+            res.status(400).send({
+                success: false,
+                err: error
+            })
+        } else {
+
+            if (result.length > 0) {
+                res.status(200).send({
+                    success: true,
+                    message: "Login Successfully"
+                    
+                })
+            } else {
+                res.status(404).send({
+                    success: false,
+                    message: "User Please signup first"
+                    
+                })
+            }
+        }
+    })
+}
+
 const user_login = async (req, res, next) => {
     await db.query(`select * from user where Mobile_no=?`, [req.body.mobile_no], (err, result, feilds) => {
 
@@ -1250,7 +1278,7 @@ const admin_getQuestion_by_Id=async(req,res,next)=>{
     }
 }
 module.exports = {
-    user_signup,user_login,user_update_language_and_category, user_logout,avtar_category, add_question,
+    user_signup,check_Mo_no,user_login,user_update_language_and_category, user_logout,avtar_category, add_question,
     question, add_avtar, admin_signup, get_question_user, admin_update_question, admin_add_category,
     admin_add_language, admin_delete_language, total_user, total_language, total_category, admin_update_questionStatus,
     adminLogin1, answer1, quiz_category, admin_Statistics,admin_get_user,delete_user,admin_getQuestion,
