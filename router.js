@@ -57,7 +57,7 @@ router.post('/quiz_Categories',validation,controller.quiz_category)
 
 router.get('/user/total',adminValidation,controller.total_user)
 
-router.get('/admin/Dashboard_total',adminValidation,controller.total_language)
+router.get('/admin/Dashboard_total',controller.total_language)
 
 router.get('/admin/total_category',adminValidation,controller.total_category)
 
