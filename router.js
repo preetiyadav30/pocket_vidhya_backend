@@ -32,6 +32,8 @@ router.use(function(req, res, next) {
 
 router.post("/user/signup",controller.user_signup)
 
+router.post("/signup",controller.signup)
+
 router.post('/user/mobile_verification',controller.check_Mo_no)
 
 router.post("/user/login",controller.user_login)

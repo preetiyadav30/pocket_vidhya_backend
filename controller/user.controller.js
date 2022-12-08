@@ -49,6 +49,48 @@ const user_signup = async (req,res,next)=>{
     }
 }
 
+const signup = async (req, res, next) => {
+    // try {
+    await db.query('select * from user where username=? and mobile_no=?', [req.body.mobile_no,req.body.username], (err, results, feilds) => {
+        if (err) {
+            res.status(400).send({
+                success: false,
+                message: "user already exists please login",
+                err: err
+            })
+        }
+        if (!results.length) {
+            db.query('Insert into user(username,mobile_no) values(?,?)', [req.body.username, req.body.mobile_no], (berr, bresult, feilds) => {
+                if (berr) {
+                    res.status(400).send({
+                        success: false,
+                        err:"user already exists"
+                    })
+                }
+                else {
+                    const token = jwt.sign({ data: bresult }, process.env.JWT_SECRET_KEY)
+                   
+                    db.query('select * from user where mobile_no=?', [req.body.mobile_no], (cerr, cresult, feilds) => {
+                        if (cerr) {
+                            res.status(400).send({
+                                success: false,
+                                err:"user already exists"
+                            })
+                        }
+                        else{
+                                   res.status(201).send({
+                        success: true,
+                        message: "Signup Successfully",
+                        results: cresult,
+                        token: token
+                    })
+                   }
+                   })
+                }
+            })
+        }
+    })
+}
 
 const check_Mo_no = async (req, res, next) => {
 
@@ -1278,7 +1320,7 @@ const admin_getQuestion_by_Id=async(req,res,next)=>{
     }
 }
 module.exports = {
-    user_signup,check_Mo_no,user_login,user_update_language_and_category, user_logout,avtar_category, add_question,
+    user_signup,signup,check_Mo_no,user_login,user_update_language_and_category, user_logout,avtar_category, add_question,
     question, add_avtar, admin_signup, get_question_user, admin_update_question, admin_add_category,
     admin_add_language, admin_delete_language, total_user, total_language, total_category, admin_update_questionStatus,
     adminLogin1, answer1, quiz_category, admin_Statistics,admin_get_user,delete_user,admin_getQuestion,
