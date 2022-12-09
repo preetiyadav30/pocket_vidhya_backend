@@ -46,6 +46,8 @@ router.get("/user/getQuestion/:Language/:category",validation,controller.user_ge
 
 router.post('/user/answer',validation,controller1.answer_attempt)
 
+router.get('/user/get_all_categories',validation,controller.user_get_all_categories)
+
 //router.get('/getAvtar',upload.single('image'),controller.avtar_category)
 
 //router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)

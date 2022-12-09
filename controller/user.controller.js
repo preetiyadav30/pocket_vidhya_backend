@@ -342,6 +342,36 @@ const avtar_category = async (req, res) => {
     }
 
 }
+
+const user_get_all_categories = async (req,res,next)=>{
+    try {
+        await db.query(`select * from category`,(err,result,feilds)=>{
+            if(err){
+                res.status(401).send({
+                    success:false,
+                    err:err.message 
+                });
+            }
+            if(!result){
+                res.status(404).send({
+                    success:false,
+                    msg:"data not found"
+                });
+            }else(
+                res.status(200).send({
+                    success:true,
+                    msg:"All categories ",
+                    results:result
+                })
+            )
+        })
+    } catch (error) {
+       res.status(500).send({
+        success:false,
+        error:error.message
+       }) 
+    }
+}
 // **************************************
 
 // const admin_addCategory=(req,res,next)=>{
@@ -1370,6 +1400,6 @@ module.exports = {
     admin_add_language, admin_delete_language, total_user, total_language, total_category, admin_update_questionStatus,
     adminLogin1, answer1, quiz_category, admin_Statistics,admin_get_user,delete_user,admin_getQuestion,
     delete_question,admin_getQuestion_by_language_and_category,admin_getQuestion_by_Id,get_all_categories,
-    user_getQuestion_by_language_and_category,admin_forgot_password
+    user_getQuestion_by_language_and_category,admin_forgot_password,user_get_all_categories
 }
 
