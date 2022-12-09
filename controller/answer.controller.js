@@ -172,7 +172,7 @@ const answer_attempt = async (req, res, next) => {
     try {
         const auth = req.headers.authorization.split(" ")[1]
         const decode = jwt.decode(auth)
-        const decoded_Username = decode.data[0].user_id
+        let decoded_Username = decode.data[0].user_id
         db.query(`Select * from questionnaire where question_id=? and Status="ACTIVE" `, [req.body.question_id], (question_err, question_result) => {
             if (question_err) {
                 res.status(400).send({

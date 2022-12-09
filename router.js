@@ -44,6 +44,8 @@ router.patch("/user/update_language_and_category",validation,controller.user_upd
 
 router.get("/user/getQuestion/:Language/:category",validation,controller.user_getQuestion_by_language_and_category)
 
+router.post('/user/answer',validation,controller1.answer_attempt)
+
 //router.get('/getAvtar',upload.single('image'),controller.avtar_category)
 
 //router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)
@@ -96,8 +98,6 @@ router.delete("/user/delete_user/:user_id",controller.delete_user)
 router.delete("/admin/delete_question/:Question_id",controller.delete_question);
 
 router.get('/admin/getQuestion/:Language/:category',controller.admin_getQuestion_by_language_and_category)
-
-router.post('/user/answer',validation,controller1.answer_attempt)
 
 router.post('/user/QA',QAcontroller.QA)
 

@@ -10,7 +10,7 @@ const { request } = require('express');
 
 const user_signup = async (req,res,next)=>{
     try {
-        await db.query(`select * from user where username=? and Mobile_no=?`,[req.body.username,req.body.mobile_no],(err,result,fields)=>{
+        await db.query(`select * from user where username=? and Mobile_no=?`,[req.body.username,req.body.Mobile_no],(err,result,fields)=>{
             if(err){
                 res.status(401).send({
                     success:false,
@@ -18,7 +18,7 @@ const user_signup = async (req,res,next)=>{
                 });
             }
             if(!result.length){
-                db.query(`insert into user (username,Mobile_no) values (?,?)`,[req.body.username,req.body.mobile_no],(err,result,fields)=>{
+                db.query(`insert into user (username,Mobile_no) values (?,?)`,[req.body.username,req.body.Mobile_no],(err,result,fields)=>{
                     if(err){
                         res.status(400).send({
                             success:false,
@@ -51,7 +51,7 @@ const user_signup = async (req,res,next)=>{
 
 const signup = async (req, res, next) => {
     // try {
-    await db.query('select * from user where username=? and mobile_no=?', [req.body.mobile_no,req.body.username], (err, results, feilds) => {
+    await db.query('select * from user where username=? and Mobile_no=?', [req.body.Mobile_no,req.body.username], (err, results, feilds) => {
         if (err) {
             res.status(400).send({
                 success: false,
@@ -60,7 +60,7 @@ const signup = async (req, res, next) => {
             })
         }
         if (!results.length) {
-            db.query('Insert into user(username,mobile_no) values(?,?)', [req.body.username, req.body.mobile_no], (berr, bresult, feilds) => {
+            db.query('Insert into user(username,Mobile_no) values(?,?)', [req.body.username, req.body.Mobile_no], (berr, bresult, feilds) => {
                 if (berr) {
                     res.status(400).send({
                         success: false,
@@ -70,7 +70,7 @@ const signup = async (req, res, next) => {
                 else {
                     const token = jwt.sign({ data: bresult }, process.env.JWT_SECRET_KEY)
                    
-                    db.query('select * from user where mobile_no=?', [req.body.mobile_no], (cerr, cresult, feilds) => {
+                    db.query('select * from user where Mobile_no=?', [req.body.Mobile_no], (cerr, cresult, feilds) => {
                         if (cerr) {
                             res.status(400).send({
                                 success: false,
