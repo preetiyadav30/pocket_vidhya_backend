@@ -435,7 +435,7 @@ const admin_forgot_password = (req, res) => {
                         else {
                             res.status(200).send({
                                 success: true,
-                                msg: "password forgot successfully"
+                                msg: "password reset successfully"
                             })
                         }
                     })
