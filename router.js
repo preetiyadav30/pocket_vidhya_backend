@@ -83,6 +83,8 @@ router.post('/admin/Signup',controller.admin_signup)
 
 router.post('/admin/Login',controller.adminLogin1)
 
+router.patch('/admin/forgot_password',controller.admin_forgot_password)
+
 router.post('/admin/add_language',adminValidation,controller.admin_add_language)
 
 router.get('/admin/getStatistics',adminValidation,controller.admin_Statistics)
