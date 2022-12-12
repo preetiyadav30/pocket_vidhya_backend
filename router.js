@@ -77,6 +77,8 @@ router.post('/admin/add_category',adminValidation,controller.admin_add_category)
 
 router.get('/admin/get_all_categories',controller.get_all_categories)
 
+router.get("/admin/get_all_language",controller.get_all_language)
+
 router.post('/admin/delete_language',adminValidation,controller.admin_delete_language)
 
 router.post('/admin/add_question',adminValidation,controller.add_question)
