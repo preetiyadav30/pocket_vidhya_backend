@@ -1424,12 +1424,111 @@ const admin_getQuestion_by_Id=async(req,res,next)=>{
         })
     }
 }
+
+const user_rank = async (req, res, next) => {
+    const auth = req.headers.authorization.split(" ")[1]
+    const decode = jwt.decode(auth)
+    const decoded_Username = decode.data[0].user_id
+    const user_name = decode.data[0].username
+
+    await db.query(`SELECT SUM(correct_Answers) AS sum_of_correct_Answers FROM attempts where user_id=${decoded_Username}`, (err1, results, feilds) => {
+        if (err1) {
+            res.status(400).send({
+                success: false,
+                err: err1
+            })
+        }
+        if (results) {
+            const total_score = results[0].sum_of_correct_Answers;
+            // if (total_score > 0 && total_score == total_score) {
+            // if(!decoded_Username){}
+            db.query(`select * from rank where user_id=${decoded_Username}`, (err, result) => {
+                if (err) {
+                    res.status(400).send({
+                        success: false,
+                        err: err
+                    })
+                }
+                if (!result.length) {
+
+                    // console.log(user_name)
+                    db.query(`insert into rank (user_id,user_name,average_score) values (?,?,?)`, [decoded_Username, user_name, total_score], (err, result) => {
+                        if (err) {
+                            res.status(400).send({
+                                success: false,
+                                err: err
+                            })
+                        }
+                        if (result) {
+                            db.query(`select * from rank order by average_score DESC`, (err, result) => {
+                                if (err) {
+                                    res.status(400).send({
+                                        success: false,
+                                        err: score_err
+                                    })
+                                }
+                                if (result) {
+                                    res.send({
+                                        message: "User rank updated",
+                                        success: true,
+                                        results: result
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+
+                // }
+                else {
+                    db.query(`select * from rank where user_id=${decoded_Username}`, (err, result) => {
+                        if (err) {
+                            res.status(400).send({
+                                success: false,
+                                err: err
+                            })
+                        }
+                        if (result) {
+                            db.query(`update rank set average_score=${total_score} where user_id=${decoded_Username}`, (err, result) => {
+                                if (err) {
+                                    res.status(400).send({
+                                        success: false,
+                                        err: err
+                                    })
+                                }
+                                if (result) {
+                                    db.query(`select user_name,average_score from rank order by average_score DESC`, (err, result) => {
+                                        if (err) {
+                                            res.status(400).send({
+                                                success: false,
+                                                err: score_err
+                                            })
+                                        }
+                                        if (result) {
+                                            res.send({
+                                                message: "User rank updated",
+                                                success: true,
+                                                results:result
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+
+
+        }
+    })
+}
 module.exports = {
     user_signup,signup,check_Mo_no,user_login,user_update_language_and_category, user_logout,avtar_category, add_question,
     question, add_avtar, admin_signup, get_question_user, admin_update_question, admin_add_category,
     admin_add_language, admin_delete_language, total_user, total_language, total_category, admin_update_questionStatus,
     adminLogin1, answer1, quiz_category, admin_Statistics,admin_get_user,delete_user,admin_getQuestion,
     delete_question,admin_getQuestion_by_language_and_category,admin_getQuestion_by_Id,get_all_categories,
-    user_getQuestion_by_language_and_category,admin_forgot_password,user_get_all_categories,get_all_language
+    user_getQuestion_by_language_and_category,admin_forgot_password,user_get_all_categories,get_all_language, user_rank
 }
 

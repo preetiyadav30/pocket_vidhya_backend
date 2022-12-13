@@ -54,6 +54,8 @@ router.get('/user/get_all_categories',validation,controller.user_get_all_categor
 
 router.post('/answer',validation,controller.answer1);
 
+router.post('/user/rank', validation, controller.user_rank)
+
 router.post ('/get_question_user',validation,controller.get_question_user)
 
 router.post('/quiz_Categories',validation,controller.quiz_category)

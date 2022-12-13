@@ -282,7 +282,7 @@ const answer_attempt = async (req, res, next) => {
                                                                                 })
                                                                             }
                                                                             if (vacantAnswer_result) {
-                                                                                const a = (100*Total_Correct_Answers)/Total_Available_Questions
+                                                                                const percentage = (100*Total_Correct_Answers)/Total_Available_Questions
                                                                                 res.status(200).send({
                                                                                     success: true,
                                                                                     isCorrect: isCorrectans,
@@ -293,7 +293,7 @@ const answer_attempt = async (req, res, next) => {
                                                                                     Incorrect_Answers: Total_Incorrect_Answers,
                                                                                     Total_skiped_Questions: total_skipd_questions,
                                                                                     // Score: `${Total_Correct_Answers}/${Total_Available_Questions}`
-                                                                                    Score:a
+                                                                                    Score:percentage
 
                                                                                 })
                                                                             }
@@ -315,6 +315,7 @@ const answer_attempt = async (req, res, next) => {
                                                                     Correct_Answers: Total_Correct_Answers,
                                                                     Incorrect_Answers: Total_Incorrect_Answers,
                                                                     Total_skiped_Questions: total_skipd_questions,
+                                                                    Score:""
 
                                                                 })
 
