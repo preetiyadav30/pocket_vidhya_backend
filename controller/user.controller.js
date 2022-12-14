@@ -120,7 +120,7 @@ const check_Mo_no = async (req, res, next) => {
 }
 
 const user_login = async (req, res, next) => {
-    await db.query(`select * from user where Mobile_no=?`, [req.body.mobile_no], (err, result, feilds) => {
+    await db.query(`select * from user where Mobile_no=?`, [req.body.Mobile_no], (err, result, feilds) => {
 
         if (err) {
             res.status(400).send({

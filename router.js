@@ -52,7 +52,7 @@ router.get('/user/get_all_categories',validation,controller.user_get_all_categor
 
 //router.post('/add_avtar', adminValidation,upload.single('image'),controller.add_avtar)
 
-router.post('/answer',validation,controller.answer1);
+//router.post('/answer',validation,controller.answer1);
 
 router.post('/user/rank', validation, controller.user_rank)
 
