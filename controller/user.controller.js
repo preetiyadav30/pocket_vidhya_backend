@@ -55,7 +55,6 @@ const signup = async (req, res, next) => {
         if (err) {
             res.status(400).send({
                 success: false,
-                message: "user already exists please login",
                 err: err
             })
         }
@@ -64,7 +63,7 @@ const signup = async (req, res, next) => {
                 if (berr) {
                     res.status(400).send({
                         success: false,
-                        err:"user already exists"
+                        err:berr
                     })
                 }
                 else {
@@ -74,11 +73,12 @@ const signup = async (req, res, next) => {
                         if (cerr) {
                             res.status(400).send({
                                 success: false,
-                                err:"user already exists"
+                                message:"user already exists please login",
+                                err:cerr
                             })
                         }
                         else{
-                                   res.status(201).send({
+                        res.status(201).send({
                         success: true,
                         message: "Signup Successfully",
                         results: cresult,
@@ -111,7 +111,7 @@ const check_Mo_no = async (req, res, next) => {
             } else {
                 res.status(404).send({
                     success: false,
-                    message: "User Please signup first"
+                    message: "User not found Please signup first"
                     
                 })
             }
