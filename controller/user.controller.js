@@ -55,6 +55,7 @@ const signup = async (req, res, next) => {
         if (err) {
             res.status(400).send({
                 success: false,
+                message:"user already exits with this username",
                 err: err
             })
         }
