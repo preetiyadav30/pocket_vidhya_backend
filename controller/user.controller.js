@@ -64,6 +64,7 @@ const signup = async (req, res, next) => {
                 if (berr) {
                     res.status(400).send({
                         success: false,
+                        message:"user already exits with this mobile number",
                         err:berr
                     })
                 }
