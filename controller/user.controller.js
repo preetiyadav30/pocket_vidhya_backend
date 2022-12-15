@@ -655,7 +655,7 @@ const get_question_user = async (req, res, next) => {
 
     const default_status = "ACTIVE";
     try {
-        await db.query('Select Question_id,Question,option1,option2,option3,option4,correct_option,Description from questionnaire where status= ? and category=? order by rand()', [default_status, req.body.category], (err, result, feilds) => {
+        await db.query('Select Question_id,Question,option1,option2,option3,option4,correct_option,Description from questionnaire where status= ? and category=? and language=? order by rand()', [default_status, req.body.category,req.body.language], (err, result, feilds) => {
             if (err) {
                 res.status(400).send({
                     success: false,
@@ -666,7 +666,7 @@ const get_question_user = async (req, res, next) => {
                 if (!result.length) {
                     res.status(400).send({
                         success: false,
-                        msg: `No Questions found for category ${req.body.category}`
+                        msg: `No Questions found for category ${req.body.category} or ${req.body.language}`
                     })
                 }
                 else {
