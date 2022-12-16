@@ -54,7 +54,7 @@ router.get('/user/get_all_categories',validation,controller.user_get_all_categor
 
 //router.post('/answer',validation,controller.answer1);
 
-router.get("/user/my_progress",QAcontroller.my_progress)
+router.get("/user/my_progress",validation,QAcontroller.my_progress)
 
 router.post('/user/rank', validation, controller.user_rank)
 
@@ -108,6 +108,8 @@ router.delete("/user/delete_user/:user_id",controller.delete_user)
 router.delete("/admin/delete_question/:Question_id",controller.delete_question);
 
 router.get('/admin/getQuestion/:Language/:category',controller.admin_getQuestion_by_language_and_category)
+
+router.get('/admin/my_progress/:user_id',QAcontroller.admin_my_progress)
 
 router.post('/user/QA',QAcontroller.QA)
 

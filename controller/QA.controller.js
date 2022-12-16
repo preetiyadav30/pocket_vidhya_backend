@@ -103,9 +103,9 @@ const my_progress = async (req,res,next)=>{
                                 const Total_Question = totalQuestion_result[0]
                                 res.status(200).send({
                                     Username:decoded_Username,Mobile_no:decoded_Mobile_no,
-                                    Right_Answer,Wrong_Answer,Attempted_question,Unattempted_Question,
-                                    percentage,Total_Questions:Total_Question,
-                                    result
+                                    percentage,Right_Answer,Wrong_Answer,Attempted_question,Unattempted_Question,
+                                    Total_Questions:Total_Question
+                                    
                                     
                                 })
                                 
@@ -115,10 +115,7 @@ const my_progress = async (req,res,next)=>{
                         })
                     }
                 }
-                // res.status(200).send({
-                //     success:true,
-                //     results:totalQuestion_result
-                // })
+             
             }
         })
 
@@ -130,4 +127,45 @@ const my_progress = async (req,res,next)=>{
     }
 }
 
-module.exports={QA,my_progress}
+const admin_my_progress = async(req,res,next)=>{
+    try {
+        await db.query(`select * from attempts where user_id=?`,(req.params.user_id),(err,result)=>{
+            if(err){
+                res.status(400).send({
+                    success:false,
+                    err:err.message
+                })
+            }
+            if(result){
+                if(!result.length){
+                    res.status(404).send("data not found");
+                }
+                else{
+                    const Right_Answer = result[0].correct_Answers
+                    const Attempted_question = result[0].q_attempted
+                    const Unattempted_Question = result[0].q_Skipped
+                    const Category = result[0].category
+                    const Level = 1
+                    const Wrong_Question = Attempted_question-(Right_Answer+Unattempted_Question)
+
+                    res.status(200).send({
+                        Level,
+                        Category,
+                        Right_Answer,
+                        Wrong_Question,
+                        Attempted_question,
+                        Unattempted_Question,
+
+                    })
+                 }
+            }
+        })
+    } catch (error) {
+        res.status(500).send({
+            success:false,
+            error:error
+        })
+    }
+}
+
+module.exports={QA, my_progress, admin_my_progress}
