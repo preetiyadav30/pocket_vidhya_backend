@@ -316,7 +316,7 @@ const answer_attempt = async (req, res, next) => {
                                                                     Correct_Answers: Total_Correct_Answers,
                                                                     Incorrect_Answers: Total_Incorrect_Answers,
                                                                     Total_skiped_Questions: total_skipd_questions,
-                                                                    Score:"percentage"
+                                                                    Score:percentage
 
                                                                 })
 
