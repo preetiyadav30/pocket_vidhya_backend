@@ -305,8 +305,9 @@ const answer_attempt = async (req, res, next) => {
                                                                 })
                                                             }
                                                             else {
-
+                                                                const percentage = (100*Total_Correct_Answers)/Total_Available_Questions
                                                                 res.status(200).send({
+                                                                    
                                                                     success: true,
                                                                     isCorrect: isCorrectans,
                                                                     msg: `Remaining ${Questions_RemainnigTo_Attempt} questions Should be Initiated for counting an Attempt`,
@@ -315,7 +316,7 @@ const answer_attempt = async (req, res, next) => {
                                                                     Correct_Answers: Total_Correct_Answers,
                                                                     Incorrect_Answers: Total_Incorrect_Answers,
                                                                     Total_skiped_Questions: total_skipd_questions,
-                                                                    Score:""
+                                                                    Score:"percentage"
 
                                                                 })
 
