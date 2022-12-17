@@ -84,15 +84,24 @@ const my_progress = async (req,res,next)=>{
             }else{
                 if(totalQuestion_result){
                     if(!totalQuestion_result.length){
-                        res.send("no question available")
+                        res.status(404).send({
+                            success:false,
+                            message:"no question available"
+                        })
                     }else{
                         db.query(`select * from attempts where user_id=? and category=?`,[decoded_User_id,decoded_category],(err,result)=>{
                             if(err){
-                                res.send({err:err})
+                                res.status(400).send({
+                                    success:false,
+                                    err:err.message
+                                })
                             }
                             if(result){
                                if(!result.length){
-                                res.send("you are not attempt any quiz")
+                                res.status(404).send({
+                                    success:false,
+                                    message:"you are not attempted any question"
+                                })
                                }
                                else{            
                                 let Right_Answer=result[0].correct_Answers
@@ -104,9 +113,7 @@ const my_progress = async (req,res,next)=>{
                                 res.status(200).send({
                                     Username:decoded_Username,Mobile_no:decoded_Mobile_no,
                                     percentage,Right_Answer,Wrong_Answer,Attempted_question,Unattempted_Question,
-                                    Total_Questions:Total_Question
-                                    
-                                    
+                                    Total_Questions:Total_Question   
                                 })
                                 
                                
