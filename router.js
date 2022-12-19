@@ -101,7 +101,7 @@ router.get('/admin/getQuestions/:category',controller.admin_getQuestion)
 
 router.get('/admin/getQuestions_by_id/:Question_id',controller.admin_getQuestion_by_Id)
 
-router.get('/admin/getUsers',adminValidation,controller.admin_get_user)
+router.get('/admin/getUsers',controller.admin_get_user)
 
 router.delete("/user/delete_user/:user_id",controller.delete_user)
 
