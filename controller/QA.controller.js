@@ -155,7 +155,7 @@ const admin_my_progress = async(req,res,next)=>{
                     const Level = 1
                     const Wrong_Question = Attempted_question-(Right_Answer+Unattempted_Question)
 
-                    res.status(200).send({
+                    res.status(200).send([
                         Level,
                         Category,
                         Right_Answer,
@@ -163,7 +163,7 @@ const admin_my_progress = async(req,res,next)=>{
                         Attempted_question,
                         Unattempted_Question,
 
-                    })
+                    ])
                  }
             }
         })
