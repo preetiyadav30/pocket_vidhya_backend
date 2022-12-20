@@ -145,7 +145,10 @@ const admin_my_progress = async(req,res,next)=>{
             }
             if(result){
                 if(!result.length){
-                    res.status(404).send("data not found");
+                    res.status(404).send({
+                        success:false,
+                        message:"data not found with thid user id "
+                    })
                 }
                 else{
                     const Right_Answer = result[0].correct_Answers
