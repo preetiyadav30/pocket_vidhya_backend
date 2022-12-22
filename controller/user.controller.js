@@ -157,7 +157,7 @@ const user_update_language_and_category = async (req, res, next) => {
         const auth = req.headers.authorization.split(" ")[1]
         const decode = jwt.decode(auth)
 
-        let decoded_Mobile_no = decode.data[0].Mobile_no
+        let decoded_Mobile_no = decode.data[0].mobile_no
 
     db.query(`update user set Language=?,category=? where Mobile_no=${decoded_Mobile_no}`, [req.body.Language, req.body.category], (err, result) => {
         if (err) {
