@@ -29,6 +29,7 @@ router.use(function(req, res, next) {
     next();});
 
 /**************USER ******************/
+router.post('/user/new/login',controller.new_login_api)
 
 router.post("/user/signup",controller.user_signup)
 

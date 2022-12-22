@@ -1526,6 +1526,59 @@ const user_rank = async (req, res, next) => {
         }
     })
 }
+
+const new_login_api = async (req, res, next) => {
+    await db.query(`select * from user where mobile_no=?`, [req.body.mobile_no], (err1, result, feilds) => {
+        if (err1) {
+            res.status(400).send({
+                success: false,
+                err: err1
+            })
+        }
+        if (result) {
+            const token = jwt.sign({ data: result }, process.env.JWT_SECRET_KEY)
+            if (result.length) {
+                res.send({
+                    message: "User Exist And Login successfully",
+                    success: true,
+                    token: token,
+                    results: result
+                })
+            } else {
+                db.query('Insert into user(username,mobile_no) values(?,?)', [req.body.username, req.body.mobile_no], (berr, bresult, feilds) => {
+                    if (berr) {
+                        res.status(400).send({
+                            success: false,
+                            err: berr
+                        })
+                    }
+                    else {
+                        db.query(`select * from user where mobile_no=?`, [req.body.mobile_no], (berr1, result1, feilds) => {
+                            if (berr1) {
+                                res.status(400).send({
+                                    success: false,
+                                    err: berr1
+                                })
+                            } else {
+                                if (result1) {
+                                    const token = jwt.sign({ data: result1 }, process.env.JWT_SECRET_KEY)
+                                    if (result1.length) {
+                                        res.status(201).send({
+                                            message: "User Registered Successfully",
+                                            success: true,
+                                            token: token,
+                                            results: result1
+                                        })
+                                    }
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    })
+}
 module.exports = {
     user_signup,signup,check_Mo_no,user_login,user_update_language_and_category, user_logout,avtar_category, add_question,
     question, add_avtar, admin_signup, get_question_user, admin_update_question, admin_add_category,
@@ -1533,5 +1586,6 @@ module.exports = {
     adminLogin1, answer1, quiz_category, admin_Statistics,admin_get_user,delete_user,admin_getQuestion,
     delete_question,admin_getQuestion_by_language_and_category,admin_getQuestion_by_Id,get_all_categories,
     user_getQuestion_by_language_and_category,admin_forgot_password,user_get_all_categories,get_all_language, user_rank
+    ,new_login_api
 }
 
