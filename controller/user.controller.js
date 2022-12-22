@@ -1528,7 +1528,7 @@ const user_rank = async (req, res, next) => {
 }
 
 const new_login_api = async (req, res, next) => {
-    await db.query(`select * from user where mobile_no=?`, [req.body.mobile_no], (err1, result, feilds) => {
+    await db.query(`select * from user where Mobile_no=?`, [req.body.Mobile_no], (err1, result, feilds) => {
         if (err1) {
             res.status(400).send({
                 success: false,
@@ -1545,7 +1545,7 @@ const new_login_api = async (req, res, next) => {
                     results: result
                 })
             } else {
-                db.query('Insert into user(username,mobile_no) values(?,?)', [req.body.username, req.body.mobile_no], (berr, bresult, feilds) => {
+                db.query('Insert into user(username,Mobile_no) values(?,?)', [req.body.username, req.body.Mobile_no], (berr, bresult, feilds) => {
                     if (berr) {
                         res.status(400).send({
                             success: false,
@@ -1553,7 +1553,7 @@ const new_login_api = async (req, res, next) => {
                         })
                     }
                     else {
-                        db.query(`select * from user where mobile_no=?`, [req.body.mobile_no], (berr1, result1, feilds) => {
+                        db.query(`select * from user where Mobile_no=?`, [req.body.Mobile_no], (berr1, result1, feilds) => {
                             if (berr1) {
                                 res.status(400).send({
                                     success: false,
