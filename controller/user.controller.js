@@ -69,7 +69,7 @@ const signup = async (req, res, next) => {
                     })
                 }
                 else {
-                    const token = jwt.sign({ data: bresult }, process.env.JWT_SECRET_KEY)
+                   
                    
                     db.query('select * from user where Mobile_no=?', [req.body.Mobile_no], (cerr, cresult, feilds) => {
                         if (cerr) {
@@ -80,6 +80,7 @@ const signup = async (req, res, next) => {
                             })
                         }
                         else{
+                            const token = jwt.sign({ data: cresult }, process.env.JWT_SECRET_KEY)    
                         res.status(201).send({
                         success: true,
                         message: "Signup Successfully",
