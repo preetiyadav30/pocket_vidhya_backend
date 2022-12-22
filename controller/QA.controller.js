@@ -89,7 +89,8 @@ const my_progress = async (req,res,next)=>{
                             message:"no question available"
                         })
                     }else{
-                        db.query(`select last(*) from attempts where user_id=? and category=?`,[decoded_User_id,decoded_category],(err,result)=>{
+                         db.query(`SELECT * FROM attempts WHERE user_id=? and category=? ORDER BY 
+                         Attempt_id DESC LIMIT 1`,[decoded_User_id,decoded_category],(err,result)=>{
                             if(err){
                                 res.status(400).send({
                                     success:false,
