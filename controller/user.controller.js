@@ -154,46 +154,26 @@ const user_login = async (req, res, next) => {
 }
 
 const user_update_language_and_category = async (req, res, next) => {
-    const auth = req.headers.authorization.split(" ")[1]
-    const decode = jwt.decode(auth)
-    const decoded_Mobile_no = decode.data[0].Mobile_no
+  
+        const auth = req.headers.authorization.split(" ")[1]
+        const decode = jwt.decode(auth)
+
+        let decoded_Mobile_no = decode.data[0].Mobile_no
 
     db.query(`update user set Language=?,category=? where Mobile_no=${decoded_Mobile_no}`, [req.body.Language, req.body.category], (err, result) => {
         if (err) {
             res.status(400).send({
                 success: false,
-                err: err
+                err: err.message
             })
         }
         else {
-            if (result) {
-                db.query(`select * from user where Mobile_no=?`, [decoded_Mobile_no], (berr1, result1, feilds) => {
-                    if (berr1) {
-                        res.status(400).send({
-                            success: false,
-                            err: berr1
-                        })
-                    } else {
-                        if (result1) {
-                            const token = jwt.sign({ data: result1 }, process.env.JWT_SECRET_KEY)
-                            if (result1.length) {
-                                res.status(201).send({
-                                    message: `updated successfully...`,
-                                    success: true,
-                                    token: token,
-                                    results: result1, result
-                                })
-                            }
-                        }
-                    }
-                })
 
-                // res.status(200).send({
-                //     success: true,
-                //     message: `updated successfully...`,
-                //     results: result
-                // })
-            }
+            res.status(200).send({
+                success: true,
+                message: `updated successfully`,
+                results: result
+            })
         }
 
     })
