@@ -64,77 +64,99 @@ catch(err){
 }
 }
 
-const my_progress = async (req,res,next)=>{
+const my_progress = async (req, res, next) => {
     try {
         const auth = req.headers.authorization.split(" ")[1]
         const decode = jwt.decode(auth)
         const decoded_User_id = decode.data[0].user_id
-        const decoded_category = decode.data[0].category
-        const decoded_language = decode.data[0].language
-        const decoded_Username = decode.data[0].username
-        const decoded_Mobile_no = decode.data[0].Mobile_no
+        // const decoded_category = decode.data[0].category
+        // const decoded_language = decode.data[0].language
+        // const decoded_Username = decode.data[0].username
+        // const decoded_Mobile_no = decode.data[0].Mobile_no
         // console.log(decoded_Username)
-        db.query(`select count(question_id) as Total_Available_Questions from questionnaire where status='ACTIVE' and category='${decoded_category}'`, (totalQuestion_err, totalQuestion_result) => {
-
-            if(totalQuestion_err){
-                res.status(401).send({
-                    success:false,
-                    error:totalQuestion_err
-                });
-            }else{
-                if(totalQuestion_result){
-                    if(!totalQuestion_result.length){
-                        res.status(404).send({
-                            success:false,
-                            message:"no question available"
-                        })
-                    }else{
-                         db.query(`SELECT * FROM attempts WHERE user_id=? and category=? ORDER BY 
-                         Attempt_id DESC LIMIT 1`,[decoded_User_id,decoded_category],(err,result)=>{
-                            if(err){
-                                res.status(400).send({
-                                    success:false,
-                                    err:err.message
-                                })
-                            }
-                            if(result){
-                               if(!result.length){
-                                res.status(404).send({
-                                    success:false,
-                                    message:"you are not attempted any question"
-                                })
-                               }
-                               else{            
-                                let Right_Answer=result[0].correct_Answers
-                                let Unattempted_Question = result[0].q_Skipped
-                                let Attempted_question = result[0].q_attempted
-                                const percentage = (100*Right_Answer)/Attempted_question
-                                const Wrong_Answer = Attempted_question-(Right_Answer+Unattempted_Question)
-                                const Total_Question = totalQuestion_result[0]
-                                res.status(200).send({
-                                    Username:decoded_Username,Mobile_no:decoded_Mobile_no,
-                                    percentage,Right_Answer,Wrong_Answer,Attempted_question,Unattempted_Question,
-                                    Total_Questions:Total_Question   
-                                })
-                                
-                               
-                               }
-                            }
-                        })
-                    }
-                }
-             
+        db.query(`select * from user where user_id=${decoded_User_id}`, (reserr, ressult) => {
+            if (reserr) {
+                res.status(400).send({
+                    success: false,
+                    err: reserr
+                })
             }
+            else {
+                if (!ressult) {
+                    res.status(404).send({
+                        success: false,
+                        err: "user not found"
+                    })
+
+                }
+                else {
+                    db.query(`select count(question_id) as Total_Available_Questions from questionnaire where status='ACTIVE' and category='${ressult[0].category}'`, (totalQuestion_err, totalQuestion_result) => {
+
+                        if (totalQuestion_err) {
+                            res.status(401).send({
+                                success: false,
+                                error: totalQuestion_err
+                            });
+                        } else {
+                            if (totalQuestion_result) {
+                                if (!totalQuestion_result.length) {
+                                    res.status(404).send({
+                                        success: false,
+                                        message: "no question available"
+                                    })
+                                } else {
+                                    db.query(`SELECT * FROM attempts WHERE user_id=? and category=? ORDER BY 
+                                     Attempt_id DESC LIMIT 1`, [decoded_User_id, ressult[0].category], (err, result) => {
+                                        if (err) {
+                                            res.status(400).send({
+                                                success: false,
+                                                err: err.message
+                                            })
+                                        }
+                                        if (result) {
+                                            if (!result.length) {
+                                                res.status(404).send({
+                                                    success: false,
+                                                    message: "you are not attempted any question"
+                                                })
+                                            }
+                                            else {
+                                                let Right_Answer = result[0].correct_Answers
+                                                let Unattempted_Question = result[0].q_Skipped
+                                                let Attempted_question = result[0].q_attempted
+                                                const percentage = (100 * Right_Answer) / Attempted_question
+                                                const Wrong_Answer = Attempted_question - (Right_Answer + Unattempted_Question)
+                                                const Total_Question = totalQuestion_result[0]
+                                                res.status(200).send({
+                                                    Username: ressult[0].username, Mobile_no: ressult[0].Mobile_no,
+                                                    percentage, Right_Answer, Wrong_Answer, Attempted_question, Unattempted_Question,
+                                                    Total_Questions: Total_Question
+                                                })
+
+
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+
+                        }
+                    })
+
+
+                }
+            }
+
+
         })
 
     } catch (error) {
         res.status(500).send({
-            success:false,
-            error:error
+            success: false,
+            error: error
         })
     }
 }
-
 const admin_my_progress = async(req,res,next)=>{
     try {
         await db.query(`select * from attempts where user_id=?`,(req.params.user_id),(err,result)=>{
