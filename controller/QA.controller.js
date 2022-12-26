@@ -88,9 +88,9 @@ const my_progress = async (req, res, next) => {
                         err: "user not found"
                     })
 
-                } 
+                }
                 else {
-                    db.query(`select count(question_id) as Total_Available_Questions from questionnaire where status='ACTIVE' and category='${ressult[0].category}'`, (totalQuestion_err, totalQuestion_result) => {
+                    db.query(`select count(question_id) as Total_Available_Questions from questionnaire where status='ACTIVE' and category='${ressult[0].category}' and Language='${ressult[0].Language}'`, (totalQuestion_err, totalQuestion_result) => {
 
                         if (totalQuestion_err) {
                             res.status(401).send({
@@ -105,8 +105,8 @@ const my_progress = async (req, res, next) => {
                                         message: "no question available"
                                     })
                                 } else {
-                                    db.query(`SELECT * FROM attempts WHERE user_id=? and category=? ORDER BY 
-                                     Attempt_id DESC LIMIT 1`, [decoded_User_id, ressult[0].category], (err, result) => {
+                                    db.query(`SELECT * FROM attempts WHERE user_id='${decoded_User_id}' and category='${ressult[0].category}' and Language='${ressult[0].Language}' ORDER BY 
+                                     Attempt_id DESC LIMIT 1`, (err, result) => {
                                         if (err) {
                                             res.status(400).send({
                                                 success: false,
@@ -116,6 +116,7 @@ const my_progress = async (req, res, next) => {
                                         if (result) {
                                             if (!result.length) {
                                                 res.status(404).send({
+                                                   language: ressult[0].Language,
                                                     success: false,
                                                     message: "you are not attempted any question"
                                                 })
