@@ -153,6 +153,7 @@ const user_login = async (req, res, next) => {
     })
 }
 
+// user update language and category with token
 const user_update_language_and_category = async (req, res, next) => {
   
         const auth = req.headers.authorization.split(" ")[1]
