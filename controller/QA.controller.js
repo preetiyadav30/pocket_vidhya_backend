@@ -117,7 +117,7 @@ const my_progress = async (req, res, next) => {
                                             if (!result.length) {
                                                 res.status(404).send({
                                                     success: false,
-                                                    message: "you are not attempted any question"
+                                                    message: "Please Complete Any One Quiz"
                                                 })
                                             }
                                             else {
@@ -128,8 +128,13 @@ const my_progress = async (req, res, next) => {
                                                 const Wrong_Answer = Attempted_question - (Right_Answer + Unattempted_Question)
                                                 const Total_Question = totalQuestion_result[0]
                                                 res.status(200).send({
-                                                    Username: ressult[0].username, Mobile_no: ressult[0].Mobile_no,
-                                                    percentage, Right_Answer, Wrong_Answer, Attempted_question, Unattempted_Question,
+                                                    username: ressult[0].username,
+                                                    Mobile_no: ressult[0].Mobile_no,
+                                                    percentage, 
+                                                    Right_Answer, 
+                                                    Wrong_Answer, 
+                                                    Attempted_question, 
+                                                    Unattempted_Question,
                                                     Total_Questions: Total_Question
                                                 })
 
