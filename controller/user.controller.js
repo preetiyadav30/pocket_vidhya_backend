@@ -172,7 +172,7 @@ const user_update_language_and_category = async (req, res, next) => {
             res.status(200).send({
                 success: true,
                 message: `updated successfully`,
-                // results: result
+                results: result
             })
         }
 
