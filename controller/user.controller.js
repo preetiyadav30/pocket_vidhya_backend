@@ -138,14 +138,14 @@ const user_login = async (req, res, next) => {
                 res.send({
                     
                     message: "Login Successfully",
-                    success: true,
+                    signup:true,
                     results: result,
                     token:token
                     
                 })
             } else {
                 res.status(400).send({
-                    success: false,
+                    signup:false,
                     message: "Please signup to continue"
                 })
             }
