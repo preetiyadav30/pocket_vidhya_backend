@@ -239,7 +239,7 @@ const answer_attempt = async (req, res, next) => {
                                                 if (totalQuestion_result) {
         
                                                     // console.log(totalQuestion_err)
-                                                    db.query(`select count(distinct(question_id)) as total_skipd_questions from answer where isCorrect="NULL" and user_id=? and category=?`, [decoded_Username, question_result[0].category], (totalQuestion_err, totalskipQuestion_result) => {
+                                                    db.query(`select count(distinct(question_id)) as total_skipd_questions from answer where isCorrect="" and user_id=? and category=?`, [decoded_Username, question_result[0].category], (totalQuestion_err, totalskipQuestion_result) => {
                                                         if (totalQuestion_err) {
                                                             res.status(400).send({
                                                                 success: false,
