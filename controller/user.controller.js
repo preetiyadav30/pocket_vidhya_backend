@@ -6,7 +6,7 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const cors = require('cors')
 const { request } = require('express');
-
+    
 
 const user_signup = async (req,res,next)=>{
     try {
