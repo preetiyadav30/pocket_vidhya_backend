@@ -216,7 +216,7 @@ const userQuestions=async(req,res,next)=>{
     
         const decoded_Username = decode.data[0].user_id
     
-        await db.query(`select * from questionnaire where category=? and question_id not in(select question_id  from answer where category=? and user_id=? ) order by rand() limit 1`,[req.body.category,  req.body.category,decoded_Username],(err,result,feilds)=>{
+        await db.query(`select * from questionnaire where category=? and question_id not in(select question_id  from answer where category=? and user_id=? ) order by rand() limit 1`,[req.params.category,  req.params.category,decoded_Username],(err,result,feilds)=>{
             // if(!req.body.category){
             //     res.status(400).send({
             //         success:false,
@@ -233,7 +233,7 @@ const userQuestions=async(req,res,next)=>{
                 if(!result.length){
                     res.status(404).send({
                         success:false,
-                        // msg:`No questions found for ${req.body.category}`
+                        msg:`No questions found for ${req.body.category}`
                     })
                 }
                 else{
