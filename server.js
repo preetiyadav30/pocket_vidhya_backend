@@ -19,7 +19,7 @@ var options = {
 //     methods:["GET","POST","PUT","DELETE"],
 //   }
 
-//   app.use(cors(corOption));
+  app.use(cors(corOption));
 
 const db=require('./dbConnections')
 const indexrouter=require('./router')
@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 let corOption ={
-    origin:['https://rslsofttech.com','https://rslsofttech.com/admin','https://admin.rslsofttech.com'],
+    origin:['http://localhost:3000','http://localhost:5000'],
     methods:["GET","POST","PUT","DELETE"],
   }
   app.use(cors(corOption));
