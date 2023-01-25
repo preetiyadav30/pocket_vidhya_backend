@@ -1,3 +1,4 @@
+
 const db = require("../dbConnections");
 const express = require("express");
 const jwt = require("jsonwebtoken");
@@ -252,5 +253,4 @@ const userQuestions = async (req, res, next) => {
     });
   }
 };
-//sdjfhkf
 module.exports = { QA, my_progress, admin_my_progress, userQuestions };
