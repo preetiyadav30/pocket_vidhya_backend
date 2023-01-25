@@ -234,7 +234,7 @@ const userQuestions = async (req, res, next) => {
           if (!result.length) {
             res.status(404).send({
               success: false,
-              msg: `No questions found for ${req.body.category}`,
+              msg: `No questions found for ${req.params.category}`,
             });
           } else {
             res.status(200).send({
