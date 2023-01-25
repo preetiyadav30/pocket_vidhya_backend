@@ -19,7 +19,7 @@ var options = {
 //     methods:["GET","POST","PUT","DELETE"],
 //   }
 
-  app.use(cors(corOption));
+  //app.use(cors(corOption));
 
 const db=require('./dbConnections')
 const indexrouter=require('./router')
