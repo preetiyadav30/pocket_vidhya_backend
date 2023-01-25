@@ -116,7 +116,7 @@ router.get('/admin/my_progress/:user_id',QAcontroller.admin_my_progress)
 
 router.post('/user/QA',QAcontroller.QA)
 
-//***************************************************************************/
+
 
 
 module.exports=router
