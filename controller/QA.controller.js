@@ -107,93 +107,95 @@ const my_progress = async (req, res, next) => {
                               success: false,
                               err: err.message,
                             });
-<<<<<<< HEAD
-                        } else {
+
+                          } else {
                             if (totalQuestion_result) {
-                                if (!totalQuestion_result.length) {
-                                    res.status(404).send({
-                                        success: false,
-                                        message: "no question available"
-                                    })
-                                } else {
-                                    db.query(`SELECT * FROM attempts WHERE user_id='${decoded_User_id}' and category='${ressult[0].category}' and Language='${ressult[0].Language}' ORDER BY 
+                              if (!totalQuestion_result.length) {
+                                res.status(404).send({
+                                  success: false,
+                                  message: "no question available"
+                                })
+                              } else {
+                                db.query(`SELECT * FROM attempts WHERE user_id='${decoded_User_id}' and category='${ressult[0].category}' and Language='${ressult[0].Language}' ORDER BY 
                                      Attempt_id DESC LIMIT 1`, (err, result) => {
-                                        if (err) {
-                                            res.status(400).send({
-                                                success: false,
-                                                err: err.message
-                                            })
-                                        }
-                                        if (result) {
-                                            if (!result.length) {
-                                                res.status(404).send({
-                                                   language: ressult[0].Language,
-                                                    success: false,
-                                                    message: "Please Complete Any One Quiz"
-                                                })
-                                            }
-                                            else {
-                                                let Right_Answer = result[0].correct_Answers
-                                                let Unattempted_Question = result[0].q_Skipped
-                                                let Attempted_question = result[0].q_attempted
-                                                const percentage = (100 * Right_Answer) / Attempted_question
-                                                const Wrong_Answer = Attempted_question - (Right_Answer + Unattempted_Question)
-                                                const Total_Question = totalQuestion_result[0]
-                                                res.status(200).send({
-                                                    username: ressult[0].username,
-                                                    Mobile_no: ressult[0].Mobile_no,
-                                                    percentage, 
-                                                    Right_Answer, 
-                                                    Wrong_Answer, 
-                                                    Attempted_question, 
-                                                    Unattempted_Question,
-                                                    Total_Questions: Total_Question
-                                                })
-
-
-                                            }
-                                        }
+                                  if (err) {
+                                    res.status(400).send({
+                                      success: false,
+                                      err: err.message
                                     })
-                                }
-=======
-                          }
-                          if (result) {
-                            if (!result.length) {
-                              res.status(404).send({
-                                language: ressult[0].Language,
-                                success: false,
-                                message: "You have not attempted any question",
-                              });
-                            } else {
-                              let Right_Answer = result[0].correct_Answers;
-                              let Unattempted_Question = result[0].q_Skipped;
-                              let Attempted_question = result[0].q_attempted;
-                              const percentage =
-                                (100 * Right_Answer) / Attempted_question;
-                              const Wrong_Answer =
-                                Attempted_question -
-                                (Right_Answer + Unattempted_Question);
-                              const Total_Question = totalQuestion_result[0];
-                              res.status(200).send({
-                                Username: ressult[0].username,
-                                Mobile_no: ressult[0].Mobile_no,
-                                percentage,
-                                Right_Answer,
-                                Wrong_Answer,
-                                Attempted_question,
-                                Unattempted_Question,
-                                Total_Questions: Total_Question,
-                              });
->>>>>>> 84f6b037bcbfd15dce1dcde80a5e1271c6876d68
+                                  }
+                                  if (result) {
+                                    if (!result.length) {
+                                      res.status(404).send({
+                                        language: ressult[0].Language,
+                                        success: false,
+                                        message: "Please Complete Any One Quiz"
+                                      })
+                                    }
+                                    else {
+                                      let Right_Answer = result[0].correct_Answers
+                                      let Unattempted_Question = result[0].q_Skipped
+                                      let Attempted_question = result[0].q_attempted
+                                      const percentage = (100 * Right_Answer) / Attempted_question
+                                      const Wrong_Answer = Attempted_question - (Right_Answer + Unattempted_Question)
+                                      const Total_Question = totalQuestion_result[0]
+                                      res.status(200).send({
+                                        username: ressult[0].username,
+                                        Mobile_no: ressult[0].Mobile_no,
+                                        percentage,
+                                        Right_Answer,
+                                        Wrong_Answer,
+                                        Attempted_question,
+                                        Unattempted_Question,
+                                        Total_Questions: Total_Question
+                                      })
+
+
+                                    }
+                                  }
+                                })
+                              }
+
+                            }
+                            if (result) {
+                              if (!result.length) {
+                                res.status(404).send({
+                                  language: ressult[0].Language,
+                                  success: false,
+                                  message: "You have not attempted any question",
+                                });
+                              } else {
+                                let Right_Answer = result[0].correct_Answers;
+                                let Unattempted_Question = result[0].q_Skipped;
+                                let Attempted_question = result[0].q_attempted;
+                                const percentage =
+                                  (100 * Right_Answer) / Attempted_question;
+                                const Wrong_Answer =
+                                  Attempted_question -
+                                  (Right_Answer + Unattempted_Question);
+                                const Total_Question = totalQuestion_result[0];
+                                res.status(200).send({
+                                  Username: ressult[0].username,
+                                  Mobile_no: ressult[0].Mobile_no,
+                                  percentage,
+                                  Right_Answer,
+                                  Wrong_Answer,
+                                  Attempted_question,
+                                  Unattempted_Question,
+                                  Total_Questions: Total_Question,
+                                });
+
+                              }
                             }
                           }
+
                         }
-                      );
+                      )
                     }
                   }
                 }
               }
-            );
+            )
           }
         }
       }
