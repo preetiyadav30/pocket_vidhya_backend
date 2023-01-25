@@ -61,7 +61,7 @@ router.post('/user/rank', validation, controller.user_rank)
 
 router.post ('/get_question_user',validation,controller.get_question_user)
 
-router.get('/user/get_Unattempted_Question',validation,QAcontroller.userQuestions)
+router.get('/user/get_Unattempted_Question/:category',validation,QAcontroller.userQuestions)
 
 router.post('/quiz_Categories',validation,controller.quiz_category)
 //****************************************************************************/

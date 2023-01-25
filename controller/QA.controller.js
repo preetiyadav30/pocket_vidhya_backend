@@ -1,3 +1,4 @@
+
 const db = require("../dbConnections");
 const express = require("express");
 const jwt = require("jsonwebtoken");
@@ -181,6 +182,9 @@ const admin_my_progress = async (req, res, next) => {
             const Level = 1;
             const Wrong_Question =
               Attempted_question - (Right_Answer + Unattempted_Question);
+
+
+
             res.status(200).send({
               success: true,
               results: [
@@ -206,6 +210,7 @@ const admin_my_progress = async (req, res, next) => {
   }
 };
 
+//Thsi is new API for Getting user side Questions
 const userQuestions = async (req, res, next) => {
   try {
     const auth = req.headers.authorization.split(" ")[1];
@@ -215,14 +220,14 @@ const userQuestions = async (req, res, next) => {
 
     await db.query(
       `select * from questionnaire where category=? and question_id not in(select question_id  from answer where category=? and user_id=? ) order by rand() limit 1`,
-      [req.body.category, req.body.category, decoded_Username],
+      [req.params.category, req.params.category, decoded_Username],
       (err, result, feilds) => {
-        // if(!req.body.category){
-        //     res.status(400).send({
-        //         success:false,
-        //         message:"please Enter category"
-        //     })
-        // }
+        if(!req.params.category){
+            res.status(400).send({
+                success:false,
+                message:"please Enter category"
+            })
+        }
         if (err) {
           res.status(400).send({
             success: false,
@@ -232,7 +237,7 @@ const userQuestions = async (req, res, next) => {
           if (!result.length) {
             res.status(404).send({
               success: false,
-              // msg:`No questions found for ${req.body.category}`
+              msg: `No questions found for ${req.params.category}`,
             });
           } else {
             res.status(200).send({
@@ -250,5 +255,4 @@ const userQuestions = async (req, res, next) => {
     });
   }
 };
-
 module.exports = { QA, my_progress, admin_my_progress, userQuestions };
